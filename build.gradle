@@ -2,6 +2,10 @@ group 'pak'
 version '1.0-SNAPSHOT'
 
 apply plugin: 'java'
+apply plugin: 'distribution'
+apply plugin: 'application'
+
+mainClassName='AntpoolMonitor'
 
 sourceCompatibility = 1.8
 
@@ -17,4 +21,8 @@ dependencies {
     compile 'com.google.code.gson:gson:2.8.2'
     compile group: 'org.yaml', name: 'snakeyaml', version: '1.19'
     compile 'com.github.pengrad:java-telegram-bot-api:3.4.1'
+}
+
+distZip {
+
 }

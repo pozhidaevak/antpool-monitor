@@ -6,6 +6,8 @@ import notifications.TelegramNotifier;
 import org.yaml.snakeyaml.Yaml;
 import worker.WorkerLast10mRule;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
@@ -17,7 +19,7 @@ public class Configuration {
 
     static {
         Yaml yaml = new Yaml();
-        try (InputStream is = Configuration.class.getResourceAsStream("config.yaml")) {
+        try (InputStream is = new FileInputStream(new File("../config/config.yaml"))) {
             INSTANCE = yaml.loadAs(is, Configuration.class );
 
         }  catch (IOException e) {
