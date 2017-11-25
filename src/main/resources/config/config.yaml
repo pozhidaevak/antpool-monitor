@@ -6,4 +6,6 @@ rules:
     threshold: 123.45
   - worker: 'userId.worker2'
     threshold: 234.3
-
+telegram:
+  apiKey: 'apiKey'
+  chatId: 'chatId'
