@@ -6,7 +6,7 @@ public class WorkerLast10mRule implements IWorkerRule {
 
     private double threshold;
     private String worker;
-
+    //TODO private boolean state; think about adding state send a message only if it wasn't sent
 
 
     public WorkerLast10mRule() {
