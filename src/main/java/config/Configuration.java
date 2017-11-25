@@ -19,7 +19,7 @@ public class Configuration {
 
     static {
         Yaml yaml = new Yaml();
-        try (InputStream is = new FileInputStream(new File("../config/config.yaml"))) {
+        try (InputStream is = new FileInputStream(new File("config/config.yaml").getAbsoluteFile())) {
             INSTANCE = yaml.loadAs(is, Configuration.class );
 
         }  catch (IOException e) {

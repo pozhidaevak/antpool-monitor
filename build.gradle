@@ -23,6 +23,30 @@ dependencies {
     compile 'com.github.pengrad:java-telegram-bot-api:3.4.1'
 }
 
-distZip {
-
+/*distZip {
+    into(project.name+'-'+project.version) {
+        from '.'
+        include 'config/*'
+    }
+}*/
+applicationDistribution.from("config") {
+    into "config"
 }
+
+
+applicationDefaultJvmArgs = ['JVM_ARGS_TRICK']
+
+CreateStartScripts startScripts = project.startScripts
+startScripts.with {
+    doLast {
+        //A slash in groovy allows us to not escape double quotes AND single quotes
+        def slashString = /'"JVM_ARGS_TRICK"'/
+        //for some reason, gradle prints '"jvm args"'  why?  I don't know but must swap quote and double quote
+        unixScript.text = unixScript.text.replace(slashString,
+                '"-Duser.dir=$APP_HOME"')
+        windowsScript.text = windowsScript.text.replace('"JVM_ARGS_TRICK"',
+                '"-Duser.dir=%APP_HOME%"')
+    }
+}
+
+
