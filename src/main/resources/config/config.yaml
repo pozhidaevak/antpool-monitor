@@ -1,0 +1,9 @@
+key: 'key'
+secret: 'secret'
+userId: 'userId'
+rules:
+  - worker: 'userId.worker1'
+    threshold: 123.45
+  - worker: 'userId.worker2'
+    threshold: 234.3
+
