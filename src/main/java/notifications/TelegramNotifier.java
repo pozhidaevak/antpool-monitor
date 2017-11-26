@@ -6,8 +6,11 @@ import com.pengrad.telegrambot.model.request.ParseMode;
 import com.pengrad.telegrambot.request.SendMessage;
 import com.pengrad.telegrambot.response.SendResponse;
 import config.Configuration;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class TelegramNotifier implements INotifier {
+    private static final Logger log = LogManager.getLogger(TelegramNotifier.class);
     private String chatId;
     private String apiKey;
     private  TelegramBot bot;
@@ -20,7 +23,7 @@ public class TelegramNotifier implements INotifier {
                 .disableWebPagePreview(true);
         SendResponse response = bot.execute(request);
         if (!response.isOk()) {
-            System.out.println("Telegram Request error: " + response.message().toString());
+            log.error("Telegram Request error: " + response.message().toString());
         }
     }
 

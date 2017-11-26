@@ -1,6 +1,8 @@
 package api;
 
 import org.apache.commons.codec.binary.Hex;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
 
 import javax.crypto.Mac;
@@ -12,6 +14,7 @@ public class WorkerRequest {
     private String key;
     private String nonce;
     private String signature;
+    private static final Logger log = LogManager.getLogger(WorkerRequest.class);
 
     public WorkerRequest(String key, String secret, String userId) {
         this.key = key;
@@ -59,7 +62,7 @@ public class WorkerRequest {
             return Hex.encodeHexString(hmacSha256.doFinal(data.getBytes())).toUpperCase();
         }
         catch (Exception e) {
-            System.out.println("HMAC Exception");
+            log.error("HMAC Exception, should never happen");
             return "HMAC Exception"; //very bad code
         }
     }
