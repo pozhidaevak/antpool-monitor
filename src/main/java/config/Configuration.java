@@ -1,8 +1,11 @@
 package config;
 
 import api.Api;
+import api.WorkerRequest;
 import notifications.INotifier;
 import notifications.TelegramNotifier;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.yaml.snakeyaml.Yaml;
 import worker.WorkerLast10mRule;
 
@@ -13,28 +16,35 @@ import java.io.InputStream;
 import java.util.List;
 
 public class Configuration {
-    public static Configuration INSTANCE;
-    public static Api API;
-    public static INotifier NOTIFIER;
+    public static final Configuration INSTANCE;
+    //public static INotifier NOTIFIER;
+    private static final Logger log = LogManager.getLogger(WorkerRequest.class);
 
     static {
+        //TODO think about better singleton pattern
         Yaml yaml = new Yaml();
+        Configuration tempConf = null;
         try (InputStream is = new FileInputStream(new File("config/config.yaml").getAbsoluteFile())) {
-            INSTANCE = yaml.loadAs(is, Configuration.class );
+            tempConf = yaml.loadAs(is, Configuration.class );
 
         }  catch (IOException e) {
-            e.printStackTrace();
-            //TODO add logs
+            log.error(e);
+        } finally {
+            INSTANCE = tempConf;
         }
-        //TODO refactor API so it initialize automatically as rules
-        API = new Api(INSTANCE.getUserId(), Configuration.INSTANCE.getKey(), Configuration.INSTANCE.getSecret());
     }
-
-    private String userId;
-    private String key;
-    private String secret;
+    private Api api;
+    private long checkPeriod;
     private TelegramNotifier telegram;
     private List<WorkerLast10mRule> rules;
+
+    public Api getApi() {
+        return api;
+    }
+
+    public void setApi(Api api) {
+        this.api = api;
+    }
 
     public TelegramNotifier getTelegram() {
         return telegram;
@@ -42,30 +52,6 @@ public class Configuration {
 
     public void setTelegram(TelegramNotifier telegram) {
         this.telegram = telegram;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
-    public String getKey() {
-        return key;
-    }
-
-    public void setKey(String key) {
-        this.key = key;
-    }
-
-    public String getSecret() {
-        return secret;
-    }
-
-    public void setSecret(String secret) {
-        this.secret = secret;
     }
 
     public List<WorkerLast10mRule> getRules() {
@@ -76,13 +62,11 @@ public class Configuration {
         this.rules = rules;
     }
 
-    @Override
-    public String toString() {
-        return "Configuration{" +
-                "userId='" + userId + '\'' +
-                ", key='" + key + '\'' +
-                ", secret='" + secret + '\'' +
-                ", rules=" + rules +
-                '}';
+    public long getCheckPeriod() {
+        return checkPeriod;
+    }
+
+    public void setCheckPeriod(long checkPeriod) {
+        this.checkPeriod = checkPeriod;
     }
 }

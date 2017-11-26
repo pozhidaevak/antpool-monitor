@@ -22,6 +22,9 @@ public class Api {
         this.key = key;
         this.secret = secret;
     }
+    public Api() {
+        //Default constructor is necessary for initialization from JSON
+    }
 
     public Map<String, Worker> getWorkers() throws UnirestException {
         WorkerRequest request = new WorkerRequest(key, secret, userId);
@@ -42,5 +45,27 @@ public class Api {
         return workersMap;
     }
 
+    public String getKey() {
+        return key;
+    }
 
+    public void setKey(String key) {
+        this.key = key;
+    }
+
+    public String getSecret() {
+        return secret;
+    }
+
+    public void setSecret(String secret) {
+        this.secret = secret;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 }
