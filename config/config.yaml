@@ -1,6 +1,7 @@
-key: 'key'
-secret: 'secret'
-userId: 'userId'
+api:
+  key: 'key'
+  secret: 'secret'
+  userId: 'userId'
 rules:
   - worker: 'userId.worker1'
     threshold: 123.45
@@ -9,3 +10,4 @@ rules:
 telegram:
   apiKey: 'apiKey'
   chatId: 'chatId'
+checkPeriod: 60 #in seconds
