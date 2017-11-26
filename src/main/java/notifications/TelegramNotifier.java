@@ -17,10 +17,7 @@ public class TelegramNotifier implements INotifier {
         }
         SendMessage request = new SendMessage(chatId, message)
                 .parseMode(ParseMode.HTML)
-                .disableWebPagePreview(true)
-                .disableNotification(true)
-                .replyToMessageId(1)
-                .replyMarkup(new ForceReply());;
+                .disableWebPagePreview(true);
         SendResponse response = bot.execute(request);
         if (!response.isOk()) {
             System.out.println("Telegram Request error: " + response.message().toString());
