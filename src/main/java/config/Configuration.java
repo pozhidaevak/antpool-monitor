@@ -2,12 +2,11 @@ package config;
 
 import api.Api;
 import api.WorkerRequest;
-import notifications.INotifier;
 import notifications.TelegramNotifier;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.yaml.snakeyaml.Yaml;
-import worker.WorkerLast10mRule;
+import worker.WorkerLast1hRule;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -36,7 +35,7 @@ public class Configuration {
     private Api api;
     private long checkPeriod;
     private TelegramNotifier telegram;
-    private List<WorkerLast10mRule> rules;
+    private List<WorkerLast1hRule> rules;
 
     public Api getApi() {
         return api;
@@ -54,11 +53,11 @@ public class Configuration {
         this.telegram = telegram;
     }
 
-    public List<WorkerLast10mRule> getRules() {
+    public List<WorkerLast1hRule> getRules() {
         return rules;
     }
 
-    public void setRules(List<WorkerLast10mRule> rules) {
+    public void setRules(List<WorkerLast1hRule> rules) {
         this.rules = rules;
     }
 
