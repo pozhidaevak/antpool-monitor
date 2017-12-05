@@ -11,3 +11,6 @@ telegram:
   apiKey: 'apiKey'
   chatId: 'chatId'
 checkPeriod: 60 #in seconds
+dailyReport:
+  hour: 11
+  minute: 04

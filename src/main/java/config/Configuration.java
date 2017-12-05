@@ -1,7 +1,6 @@
 package config;
 
 import api.Api;
-import api.WorkerRequest;
 import notifications.TelegramNotifier;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -15,9 +14,9 @@ import java.io.InputStream;
 import java.util.List;
 
 public class Configuration {
-    public static final Configuration INSTANCE;
+    private static final Configuration INSTANCE;
     //public static INotifier NOTIFIER;
-    private static final Logger log = LogManager.getLogger(WorkerRequest.class);
+    private static final Logger log = LogManager.getLogger(Configuration.class);
 
     static {
         //TODO think about better singleton pattern
@@ -32,10 +31,25 @@ public class Configuration {
             INSTANCE = tempConf;
         }
     }
+
     private Api api;
     private long checkPeriod;
     private TelegramNotifier telegram;
     private List<WorkerLast1hRule> rules;
+
+    public void setDailyReport(DailyReport dailyReport) {
+        this.dailyReport = dailyReport;
+    }
+
+    private DailyReport dailyReport;
+
+    public DailyReport getDailyReport() {
+        return dailyReport;
+    }
+
+    public static Configuration getInstance() {
+        return INSTANCE;
+    }
 
     public Api getApi() {
         return api;
