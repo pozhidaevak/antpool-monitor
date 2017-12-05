@@ -17,14 +17,16 @@ public class TelegramNotifier implements INotifier {
             bot = new TelegramBot(apiKey);
         }
         SendMessage request = new SendMessage(chatId, message)
-                .parseMode(ParseMode.HTML)
+                .parseMode(ParseMode.Markdown)
                 .disableWebPagePreview(true);
         SendResponse response = bot.execute(request);
         if (!response.isOk()) {
-            log.error("Telegram Request error: " + response.message().toString());
+            log.error("Telegram Request error: " + response.description());
         }
     }
-
+    public static String monospace(String message) {
+        return "```\n" + message + "\n```";
+    }
     public String getChatId() {
         return chatId;
     }
