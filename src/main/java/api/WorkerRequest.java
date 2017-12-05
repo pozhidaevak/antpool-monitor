@@ -9,8 +9,9 @@ import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 import java.sql.Timestamp;
 import java.time.Instant;
+import java.util.Locale;
 
-public class WorkerRequest {
+class WorkerRequest {
     private String key;
     private String nonce;
     private String signature;
@@ -41,9 +42,10 @@ public class WorkerRequest {
     public void setNonce(String nonce) {
         this.nonce = nonce;
     }
+    /* we probably don't need this method
     public void setNonceUnixTS() {
 
-    }
+    }*/
 
     public String getSignature() {
         return signature;
@@ -59,7 +61,7 @@ public class WorkerRequest {
             Mac hmacSha256 = Mac.getInstance("HmacSHA256");
             SecretKeySpec secretKey = new SecretKeySpec(secret.getBytes(), "HmacSHA256");
             hmacSha256.init(secretKey);
-            return Hex.encodeHexString(hmacSha256.doFinal(data.getBytes())).toUpperCase();
+            return Hex.encodeHexString(hmacSha256.doFinal(data.getBytes())).toUpperCase(Locale.ENGLISH);
         }
         catch (Exception e) {
             log.error("HMAC Exception, should never happen");
