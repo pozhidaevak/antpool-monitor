@@ -4,9 +4,9 @@ import com.google.gson.annotations.SerializedName;
 
 public class Worker {
     @SerializedName("worker")
-    private String name;
-    private double last10m;
-    private double last1h;
+    final private String name;
+    final private double last10m;
+    final private double last1h;
 
     public Worker(String name, double last10m, double last1h) {
         this.name = name;

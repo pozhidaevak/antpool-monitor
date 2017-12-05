@@ -6,9 +6,9 @@ import java.util.List;
 import java.util.Map;
 
 public class WorkerChecker {
-    private Map<String, Worker> workers;
-    private List<? extends IWorkerRule> rules;
-    private INotifier notifier;
+    final private Map<String, Worker> workers;
+    final private List<? extends IWorkerRule> rules;
+    final private INotifier notifier;
 
     public WorkerChecker(Map<String, Worker> workers, List<? extends IWorkerRule> rules, INotifier notifier) {
         this.workers = workers;
