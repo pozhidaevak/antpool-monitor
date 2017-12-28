@@ -1,0 +1,12 @@
+[Unit]
+Description = Java Service
+After network.target = MyService.service
+
+[Service]
+Type = forking
+ExecStart = /usr/bin/antpool-monitor-1.0-SNAPSHOT/bin/AntpoolService.sh start
+ExecStop = /usr/bin/antpool-monitor-1.0-SNAPSHOT/bin/AntpoolService.sh stop
+ExecReload = /usr/bin/antpool-monitor-1.0-SNAPSHOT/bin/AntpoolService.sh reload
+
+[Install]
+WantedBy=multi-user.target
