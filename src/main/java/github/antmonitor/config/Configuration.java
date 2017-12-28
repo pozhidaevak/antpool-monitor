@@ -1,11 +1,11 @@
-package config;
+package github.antmonitor.config;
 
-import api.Api;
-import notifications.TelegramNotifier;
+import github.antmonitor.api.Api;
+import github.antmonitor.notifications.TelegramNotifier;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.yaml.snakeyaml.Yaml;
-import worker.WorkerLast1hRule;
+import github.antmonitor.worker.WorkerLast1hRule;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -22,7 +22,7 @@ public class Configuration {
         //TODO think about better singleton pattern
         Yaml yaml = new Yaml();
         Configuration tempConf = null;
-        try (InputStream is = new FileInputStream(new File("config/config.yaml").getAbsoluteFile())) {
+        try (InputStream is = new FileInputStream(new File("github/antmonitor/config/github.antmonitor.config.yaml").getAbsoluteFile())) {
             tempConf = yaml.loadAs(is, Configuration.class );
 
         }  catch (IOException e) {

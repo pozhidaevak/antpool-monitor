@@ -1,4 +1,4 @@
-package worker;
+package github.antmonitor.worker;
 
 import com.google.gson.annotations.SerializedName;
 

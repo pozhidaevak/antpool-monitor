@@ -1,4 +1,4 @@
-package api;
+package github.antmonitor.api;
 
 import com.google.gson.Gson;
 import com.mashape.unirest.http.JsonNode;
@@ -6,7 +6,7 @@ import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import org.json.JSONArray;
-import worker.Worker;
+import github.antmonitor.worker.Worker;
 
 import java.util.HashMap;
 import java.util.Map;

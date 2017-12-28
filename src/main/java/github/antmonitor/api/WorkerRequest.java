@@ -1,4 +1,4 @@
-package api;
+package github.antmonitor.api;
 
 import org.apache.commons.codec.binary.Hex;
 import org.apache.logging.log4j.LogManager;
@@ -7,7 +7,6 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
-import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.Locale;
 

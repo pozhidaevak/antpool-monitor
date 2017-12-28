@@ -1,4 +1,4 @@
-package worker;
+package github.antmonitor.worker;
 
 import java.util.Map;
 
@@ -57,7 +57,7 @@ public class WorkerLast1hRule implements IWorkerRule {
     public String toString() {
         final StringBuffer sb = new StringBuffer("WorkerLast1hRule{");
         sb.append("threshold=").append(threshold);
-        sb.append(", worker='").append(worker).append('\'');
+        sb.append(", github.antmonitor.worker='").append(worker).append('\'');
         sb.append('}');
         return sb.toString();
     }

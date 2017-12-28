@@ -1,4 +1,4 @@
-package notifications;
+package github.antmonitor.notifications;
 
 import com.pengrad.telegrambot.TelegramBot;
 import com.pengrad.telegrambot.model.request.ParseMode;
@@ -7,7 +7,7 @@ import com.pengrad.telegrambot.response.SendResponse;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class TelegramNotifier implements INotifier {
+public class TelegramNotifier implements IMonospaceNotifier {
     private static final Logger log = LogManager.getLogger(TelegramNotifier.class);
     private String chatId;
     private String apiKey;
@@ -24,7 +24,7 @@ public class TelegramNotifier implements INotifier {
             log.error("Telegram Request error: " + response.description());
         }
     }
-    public static String monospace(String message) {
+    public String monospace(String message) {
         return "```\n" + message + "\n```";
     }
     public String getChatId() {

@@ -1,6 +1,6 @@
-package worker;
+package github.antmonitor.worker;
 
-import worker.Worker;
+import github.antmonitor.worker.Worker;
 
 import java.util.Map;
 

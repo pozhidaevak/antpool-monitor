@@ -1,6 +1,6 @@
-package notifications;
+package github.antmonitor.notifications;
 
-import notifications.INotifier;
+import github.antmonitor.notifications.INotifier;
 
 public class StdOutNotifier implements INotifier {
     @Override
