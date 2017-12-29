@@ -10,8 +10,11 @@ import java.util.Map;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
 
-
+@Component
 public class Report {
 
   private static final Logger log = LogManager.getLogger(Report.class);
@@ -21,6 +24,7 @@ public class Report {
   private IReportGenerator reportGenerator;
   private AntpoolApi api;
 
+  @Autowired
   public Report(@NotNull INotifier notifier, @NotNull IReportGenerator reportGenerator,
       @NotNull AntpoolApi api) {
 
@@ -33,6 +37,7 @@ public class Report {
     }
   }
 
+  @Scheduled(cron = "${reportSchedule}")
   public void sendReport() {
     try {
       Map<String, Worker> workerMap = api.requestWorkers();

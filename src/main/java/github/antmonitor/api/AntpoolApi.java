@@ -13,10 +13,12 @@ import java.util.Map;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestTemplate;
 
-
+@Component
 public class AntpoolApi {
 
   private static final Logger log = LogManager.getLogger(AntpoolApi.class);
@@ -28,7 +30,11 @@ public class AntpoolApi {
   @Autowired
   private RestTemplate restTemplate;
 
-  public AntpoolApi(String userId, String key, String secret, String url) {
+  @Autowired
+  public AntpoolApi(@Value("${antpool.user}") String userId,
+      @Value("${antpool.key}") String key,
+      @Value("${antpool.secret}") String secret,
+      @Value("${antpool.url}") String url) {
     this.userId = userId;
     this.key = key;
     this.secret = secret;
@@ -41,9 +47,10 @@ public class AntpoolApi {
   }
 
   //TODO test Hysterix
-  @HystrixCommand(fallbackMethod = "openCircuit", commandProperties = {
+  @HystrixCommand(commandProperties = {
       @HystrixProperty(name = "circuitBreaker.requestVolumeThreshold", value = "2"),
       @HystrixProperty(name = "circuitBreaker.sleepWindowInMilliseconds", value = "3600000"),
+      @HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "10000"),
       @HystrixProperty(name = "metrics.rollingStats.timeInMilliseconds", value = "1800000")
   })
   public Map<String, Worker> requestWorkers() throws IOException {

@@ -1,0 +1,19 @@
+antpool:
+  key: "TODO change this"
+  secret: "TODO change this"
+  url: "https://antpool.com/api/workers.htm"
+  user: "TODO change this"
+telegram:
+  apiKey: "TODO change this"
+  chatId: "TODO change this"
+reportSchedule: "0 27 17 * * *"
+monitorRate: 10000 #10 mins in milliseconds
+rules:
+  - worker: "user.worker1"
+    threshold: 3000000
+  - worker: "user.worker2"
+    threshold: 3000000
+spring:
+  application:
+    name: "AntpoolMonitor"
+

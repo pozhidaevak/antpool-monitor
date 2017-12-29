@@ -1,16 +1,24 @@
 package github.antmonitor.worker;
 
+import github.antmonitor.config.RulesConfig;
 import github.antmonitor.notifications.INotifier;
 import java.util.List;
 import java.util.Map;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.stereotype.Component;
 
+@Component
+@EnableConfigurationProperties
 public class WorkerChecker {
+
 
   final private List<? extends IWorkerRule> rules;
   final private INotifier notifier;
 
-  public WorkerChecker(List<? extends IWorkerRule> rules, INotifier notifier) {
-    this.rules = rules;
+  @Autowired
+  public WorkerChecker(INotifier notifier, RulesConfig rulesConfig) {
+    rules = rulesConfig.getRules();
     this.notifier = notifier;
   }
 

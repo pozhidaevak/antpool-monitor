@@ -6,13 +6,24 @@ import com.pengrad.telegrambot.request.SendMessage;
 import com.pengrad.telegrambot.response.SendResponse;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
+@Component
 public class TelegramNotifier implements IMonospaceNotifier {
 
   private static final Logger log = LogManager.getLogger(TelegramNotifier.class);
   private String chatId;
   private String apiKey;
   private TelegramBot bot;
+
+  @Autowired
+  public TelegramNotifier(@Value("${telegram.chatId}") String chatId,
+      @Value("${telegram.apiKey}") String apiKey) {
+    this.chatId = chatId;
+    this.apiKey = apiKey;
+  }
 
   public void send(String message) {
     if (bot == null) {

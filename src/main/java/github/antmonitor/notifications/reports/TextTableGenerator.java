@@ -4,8 +4,10 @@ import de.vandermeer.asciitable.AsciiTable;
 import de.vandermeer.asciitable.CWC_LongestLine;
 import github.antmonitor.worker.Worker;
 import java.util.List;
+import org.springframework.stereotype.Component;
 
 // Todo make pakage local
+@Component
 public class TextTableGenerator implements IReportGenerator {
 
   @Override
