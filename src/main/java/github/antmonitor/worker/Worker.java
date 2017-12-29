@@ -1,28 +1,37 @@
 package github.antmonitor.worker;
 
-import com.google.gson.annotations.SerializedName;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Worker {
-    @SerializedName("worker")
-    final private String name;
-    final private double last10m;
-    final private double last1h;
 
-    public Worker(String name, double last10m, double last1h) {
-        this.name = name;
-        this.last10m = last10m;
-        this.last1h = last1h;
-    }
+  final private String name;
 
-    public String getName() {
-        return name;
-    }
+  final private double last10m;
 
-    public double getLast10m() {
-        return last10m;
-    }
+  final private double last1h;
 
-    public double getLast1h() {
-        return last1h;
-    }
+  @JsonCreator
+  public Worker(@JsonProperty(value = "worker", required = true) String name,
+      @JsonProperty(value = "last10m", required = true) double last10m,
+      @JsonProperty(value = "last1h", required = true) double last1h) {
+    this.name = name;
+    this.last10m = last10m;
+    this.last1h = last1h;
+  }
+
+  public double getLast10m() {
+    return last10m;
+  }
+
+  public double getLast1h() {
+    return last1h;
+  }
+
+  public String getName() {
+    return name;
+  }
 }

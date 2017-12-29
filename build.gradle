@@ -2,11 +2,17 @@ group 'pak'
 version '1.0-SNAPSHOT'
 
 buildscript {
+    ext {
+        springBootVersion ='1.5.9.RELEASE'
+        springVersion = '4.3.13.RELEASE'
+    }
     repositories {
         mavenCentral()
+        jcenter()
     }
     dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.5.9.RELEASE")
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath group: "ca.cutterslade.gradle", name: 'gradle-dependency-analyze', version: '1.2.1'
     }
 }
 
@@ -14,8 +20,7 @@ apply plugin: 'java'
 apply plugin: 'distribution'
 apply plugin: 'idea'
 apply plugin: 'org.springframework.boot'
-
-//mainClassName='AntpoolMonitor'
+apply plugin: 'ca.cutterslade.analyze'
 
 sourceCompatibility = 1.8
 
@@ -27,12 +32,18 @@ dependencies {
     compile group: 'commons-codec', name: 'commons-codec', version: '1.11'
     compile group: 'org.jetbrains', name: 'annotations', version: '15.0'
     testCompile group: 'junit', name: 'junit', version: '4.12'
-    compile group: 'com.mashape.unirest', name: 'unirest-java', version: '1.4.9'
-    compile 'com.google.code.gson:gson:2.8.2'
-    compile group: 'org.yaml', name: 'snakeyaml', version: '1.19'
     compile 'com.github.pengrad:java-telegram-bot-api:3.4.1'
     compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.10.0'
-    compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.10.0'
+    //compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.10.0'
     compile 'de.vandermeer:asciitable:0.3.2'
-    compile("org.springframework.boot:spring-boot-starter")
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.9.3'
+
+    //Spring related
+    //compile("org.springframework.boot:spring-boot-starter")
+    compile group: 'org.springframework', name: 'spring-web', version: springVersion
+    //compile group: 'org.springframework', name: 'spring-test', version: springVersion
+    //compile group: 'org.springframework.boot', name: 'spring-boot-test'
+    compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-hystrix', version:'1.4.0.RELEASE'
+    //compile group: 'org.springframework.boot', name: 'spring-boot-starter-web' , version: springBootVersion
+    testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: springBootVersion
 }
