@@ -4,6 +4,8 @@ import com.pengrad.telegrambot.TelegramBot;
 import com.pengrad.telegrambot.model.request.ParseMode;
 import com.pengrad.telegrambot.request.SendMessage;
 import com.pengrad.telegrambot.response.SendResponse;
+import java.util.concurrent.TimeUnit;
+import okhttp3.OkHttpClient;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,21 +16,29 @@ import org.springframework.stereotype.Component;
 public class TelegramNotifier implements IMonospaceNotifier {
 
   private static final Logger log = LogManager.getLogger(TelegramNotifier.class);
-  private String chatId;
-  private String apiKey;
-  private TelegramBot bot;
+  private final String chatId;
+  private final String apiKey;
+  private final TelegramBot bot;
+  private final int timeout;
 
   @Autowired
   public TelegramNotifier(@Value("${telegram.chatId}") String chatId,
-      @Value("${telegram.apiKey}") String apiKey) {
+      @Value("${telegram.apiKey}") String apiKey,
+      @Value("${telegram.timeout}") int timeout) {
     this.chatId = chatId;
     this.apiKey = apiKey;
+    this.timeout = timeout;
+
+    //Set custom timeouts and initialize bot
+    OkHttpClient client = new OkHttpClient.Builder()
+        .connectTimeout(timeout, TimeUnit.SECONDS)
+        .readTimeout(timeout, TimeUnit.SECONDS)
+        .writeTimeout(timeout, TimeUnit.SECONDS)
+        .build();
+    bot = new TelegramBot.Builder(apiKey).okHttpClient(client).build();
   }
 
   public void send(String message) {
-    if (bot == null) {
-      bot = new TelegramBot(apiKey);
-    }
     SendMessage request = new SendMessage(chatId, message)
         .parseMode(ParseMode.Markdown)
         .disableWebPagePreview(true);
@@ -38,6 +48,7 @@ public class TelegramNotifier implements IMonospaceNotifier {
     }
   }
 
+  @Override
   public String monospace(String message) {
     return "```\n" + message + "\n```";
   }
@@ -46,15 +57,8 @@ public class TelegramNotifier implements IMonospaceNotifier {
     return apiKey;
   }
 
-  public void setApiKey(String apiKey) {
-    this.apiKey = apiKey;
-  }
-
   public String getChatId() {
     return chatId;
   }
 
-  public void setChatId(String chatId) {
-    this.chatId = chatId;
-  }
 }
