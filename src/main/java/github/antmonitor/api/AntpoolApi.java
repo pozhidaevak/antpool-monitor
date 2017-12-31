@@ -54,6 +54,7 @@ public class AntpoolApi {
       @HystrixProperty(name = "metrics.rollingStats.timeInMilliseconds", value = "1800000")
   })
   public Map<String, Worker> requestWorkers() throws IOException {
+    log.info("Starting requestWorkers");
     //Receive necessary request parameters
     WorkerRequest request = new WorkerRequest(key, secret, userId);
 
