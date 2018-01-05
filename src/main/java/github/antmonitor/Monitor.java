@@ -66,7 +66,9 @@ public class Monitor {
     }
     catch (Exception e) {
       log.error("error during loop: ", e);
-      notifier.send(Messages.exceptionsInLoop(e.getMessage()));
+      if(!apiNotResponding) {
+        notifier.send(Messages.exceptionsInLoop(e.getMessage()));
+      }
     }
   }
 
