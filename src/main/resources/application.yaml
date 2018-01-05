@@ -3,7 +3,7 @@ antpool:
 telegram:
   timeout: 10 # in seconds
 reportSchedule: "0 27 17 * * *"
-monitorRate: 10 # in seconds
+monitorRate: 600 # in seconds
 spring:
   application:
     name: "AntpoolMonitor"
