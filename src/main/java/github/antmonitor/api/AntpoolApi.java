@@ -4,8 +4,8 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
-import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
 import com.netflix.hystrix.exception.HystrixBadRequestException;
+import github.antmonitor.notifications.Messages;
 import github.antmonitor.worker.Worker;
 import java.io.IOException;
 import java.util.HashMap;
@@ -46,13 +46,13 @@ public class AntpoolApi {
     throw new HystrixBadRequestException("Fallback");
   }
 
-  //TODO test Hysterix
-  @HystrixCommand(commandProperties = {
-      @HystrixProperty(name = "circuitBreaker.requestVolumeThreshold", value = "2"),
-      @HystrixProperty(name = "circuitBreaker.sleepWindowInMilliseconds", value = "3600000"),
-      @HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "10000"),
-      @HystrixProperty(name = "metrics.rollingStats.timeInMilliseconds", value = "1800000")
-  })
+  //TODO test Hystrix
+  @HystrixCommand(/*commandProperties = {
+      @HystrixProperty(name = "circuitBreaker.requestVolumeThreshold", value = "${hystrix.requestVolumeThreshold}"),
+      @HystrixProperty(name = "circuitBreaker.sleepWindowInMilliseconds", value = "#{${hystrix.sleepWindow} * 1000}"),
+      @HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "#{${hystrix.timeout} * 1000}"),
+      @HystrixProperty(name = "metrics.rollingStats.timeInMilliseconds", value = "#{${hystrix.rollingStats} * 1000}")
+  }*/)
   public Map<String, Worker> requestWorkers() throws IOException {
     log.info("Starting requestWorkers");
     //Receive necessary request parameters
@@ -82,7 +82,8 @@ public class AntpoolApi {
     } catch (JsonParseException | NullPointerException e) {
       log.error("Error during parsing Antpool API response. Response: \n" + httpResult
           + "\n Exception: \n", e);
-      throw e;
+
+      throw new IOException(Messages.noJson(), e);
     } catch (Exception e) {
       log.fatal("Unexpected exception: ", e);
       throw e;

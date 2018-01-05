@@ -3,6 +3,7 @@ package github.antmonitor;
 import com.netflix.hystrix.exception.HystrixRuntimeException;
 import github.antmonitor.api.AntpoolApi;
 import github.antmonitor.notifications.INotifier;
+import github.antmonitor.notifications.Messages;
 import github.antmonitor.notifications.reports.Report;
 import github.antmonitor.worker.Worker;
 import github.antmonitor.worker.WorkerChecker;
@@ -40,7 +41,7 @@ public class Monitor {
 
   public void init() {
     log.info("Init is called");
-    notifier.send("Hi!, I'm starting");
+    notifier.send(Messages.greeting());
     report.sendReport();
   }
 
@@ -50,27 +51,27 @@ public class Monitor {
       Map<String, Worker> workerMap = antpoolApi.requestWorkers();
       if (workerMap != null && workerMap.size() >= 1 && apiNotResponding == true) {
         apiNotResponding = false;
-        log.info("Antpool responds now");
-        notifier.send("Antpool works again");
+        log.info(Messages.antpoolWorkingAgain());
+        notifier.send(Messages.antpoolWorkingAgain());
       }
       workerChecker.checkAll(workerMap);
     } catch (HystrixRuntimeException e) {
       if (!apiNotResponding) {
         apiNotResponding = true;
         log.error("first Hystrix error");
-        notifier.send("Antpool error. Stopping requests for now");
+        notifier.send(Messages.antpoolCircuitOpened());
       } else {
         log.warn("Consequent Hystrix error");
       }
     }
     catch (Exception e) {
       log.error("error during loop: ", e);
-      notifier.send(e.getMessage());
+      notifier.send(Messages.exceptionsInLoop(e.getMessage()));
     }
   }
 
   @PreDestroy
   public  void preDestroy() {
-    notifier.send("I'm shutting down. Good Bye!");
+    notifier.send(Messages.bye());
   }
 }

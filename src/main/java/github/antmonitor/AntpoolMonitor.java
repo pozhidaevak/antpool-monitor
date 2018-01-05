@@ -6,9 +6,12 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.scheduling.TaskScheduler;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
@@ -17,6 +20,7 @@ import org.springframework.web.client.RestTemplate;
 //TODO use @Service instead @Component on all beans
 @SpringBootApplication
 @EnableConfigurationProperties
+@EnableCircuitBreaker
 public class AntpoolMonitor {
 
   public static void main(String[] args) {
@@ -48,5 +52,12 @@ public class AntpoolMonitor {
   @Bean
   public TaskScheduler taskScheduler() {
     return new ThreadPoolTaskScheduler();
+  }
+
+  @Bean
+  public MessageSource messageSource() {
+    ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
+    messageSource.setBasename("messages");
+    return messageSource;
   }
 }

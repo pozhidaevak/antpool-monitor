@@ -1,5 +1,6 @@
 package github.antmonitor.worker;
 
+import github.antmonitor.notifications.Messages;
 import java.util.Map;
 
 public class WorkerLast1hRule implements IWorkerRule {
@@ -22,13 +23,12 @@ public class WorkerLast1hRule implements IWorkerRule {
     String retVal = null;
     if (!error_state) {
       if (worker == null) {
-        retVal = "Worker '" + this.worker + "' haven't been found on antPool";
+        retVal = Messages.workerNotFound(this.worker);
       } else if (worker.getLast1h() < threshold) {
-        retVal = "Worker '" + this.worker + "' hashrate is " + worker.getLast1h() +
-            " but it should be bigger than " + threshold;
+        retVal = Messages.workerLowHashRate(this.worker, worker.getLast1h(), threshold);
       }
     } else if (worker != null && worker.getLast1h() >= threshold) {
-      retVal = "Worker '" + this.worker + "' hashrate is back to normal";
+      retVal = Messages.workerNormalHashRate(this.worker);
     }
 
     if (retVal != null) {
