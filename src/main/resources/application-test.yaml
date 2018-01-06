@@ -1,19 +1,13 @@
 reportSchedule: "0 27 17 * * *"
 monitorRate: 10 # in seconds
 hystrix:
-  collapser.default.maxRequestsInBatch: 1
-  collapser.default.requestCache.enabled: false
-
   command:
+    # Do not change. MonitorTest tests are dependant on these parameters
     requestWorkers:
-      circuitBreaker.requestVolumeThreshold: 2 # do not change
-      #circuitBreaker.errorThresholdPercentage: 99 It seems that we don't need thi parameter
-      #metrics.rollingPercentile.enabled: false
-      circuitBreaker.sleepWindowInMilliseconds: 900 # do not change
+      circuitBreaker.requestVolumeThreshold: 2
+      circuitBreaker.sleepWindowInMilliseconds: 900
       execution.isolation.thread.timeoutInMilliseconds: 10000
-      metrics.rollingStats.timeInMilliseconds: 500 # Why it should be so small?? for infrequent404 to work
-      #metrics.rollingStats.numBuckets: 1
-
+      metrics.rollingStats.timeInMilliseconds: 500
 rules:
   - worker: "user.worker1"
     threshold: 3000000

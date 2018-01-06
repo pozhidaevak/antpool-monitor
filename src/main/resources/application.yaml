@@ -2,7 +2,7 @@ antpool:
   url: "https://antpool.com/api/workers.htm"
 telegram:
   timeout: 10 # in seconds
-reportSchedule: "0 27 17 * * *"
+reportSchedule: "0 0 11 * * *" # Cron-like syntax. See https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/scheduling/support/CronSequenceGenerator.html
 monitorRate: 600 # in seconds
 spring:
   application:
@@ -10,11 +10,15 @@ spring:
   profiles:
     include: 'secrets'
 hystrix:
-  collapser.default.maxRequestsInBatch: 1
-  collapser.default.requestCache.enabled: false
   command:
     requestWorkers:
-      circuitBreaker.requestVolumeThreshold: 2 # do not change
-      circuitBreaker.sleepWindowInMilliseconds: 1800000 # do not change
+
+      # amount of failed requests that will stop requests to the pool
+      circuitBreaker.requestVolumeThreshold: 2
+
+      # Sleep time for which requests will not be sent to the pool
+      circuitBreaker.sleepWindowInMilliseconds: 1800000
       execution.isolation.thread.timeoutInMilliseconds: 10000
-      metrics.rollingStats.timeInMilliseconds: 3600000 # Why it should be so small?? for infrequent404 to work
+
+      # Time window for which the amount of failed requests is calculated
+      metrics.rollingStats.timeInMilliseconds: 3600000
