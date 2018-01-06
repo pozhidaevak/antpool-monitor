@@ -19,7 +19,7 @@ import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestTemplate;
 
 @Component
-public class AntpoolApi {
+public class AntpoolApi implements IGetWorkersApi {
 
   private static final Logger log = LogManager.getLogger(AntpoolApi.class);
 
@@ -42,6 +42,7 @@ public class AntpoolApi {
   }
 
   @HystrixCommand
+  @Override
   public Map<String, Worker> requestWorkers() throws IOException {
     log.info("Starting requestWorkers");
     //Receive necessary request parameters
@@ -115,6 +116,7 @@ public class AntpoolApi {
     return secret;
   }
 
+  @Override
   public String getUrl() {
     return url;
   }

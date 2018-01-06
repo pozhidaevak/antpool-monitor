@@ -1,7 +1,7 @@
 package github.antmonitor;
 
 import com.netflix.hystrix.exception.HystrixRuntimeException;
-import github.antmonitor.api.AntpoolApi;
+import github.antmonitor.api.IGetWorkersApi;
 import github.antmonitor.notifications.INotifier;
 import github.antmonitor.notifications.Messages;
 import github.antmonitor.notifications.reports.Report;
@@ -20,7 +20,7 @@ public class Monitor {
 
   private static final Logger log = LogManager.getLogger(Monitor.class);
 
-  private final AntpoolApi antpoolApi;
+  private final IGetWorkersApi IGetWorkersApi;
 
   private final WorkerChecker workerChecker;
 
@@ -31,9 +31,9 @@ public class Monitor {
   private boolean apiNotResponding = false;
 
   @Autowired
-  public Monitor(AntpoolApi antpoolApi, WorkerChecker workerChecker, Report report, INotifier notifier) {
+  public Monitor(IGetWorkersApi IGetWorkersApi, WorkerChecker workerChecker, Report report, INotifier notifier) {
 
-    this.antpoolApi = antpoolApi;
+    this.IGetWorkersApi = IGetWorkersApi;
     this.workerChecker = workerChecker;
     this.report = report;
     this.notifier = notifier;
@@ -48,7 +48,7 @@ public class Monitor {
   @Scheduled(fixedRateString = "#{${monitorRate} * 1000}")
   public void loop()  {
     try {
-      Map<String, Worker> workerMap = antpoolApi.requestWorkers();
+      Map<String, Worker> workerMap = IGetWorkersApi.requestWorkers();
       if (workerMap != null && workerMap.size() >= 1 && apiNotResponding == true) {
         apiNotResponding = false;
         log.info(Messages.antpoolWorkingAgain());

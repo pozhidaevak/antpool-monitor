@@ -22,7 +22,6 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.client.MockRestServiceServer;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
@@ -77,7 +76,7 @@ public class ApiTest extends AbstractTest {
   // endregion
   private static final Logger log = LogManager.getLogger(ApiTest.class);
   @Autowired
-  private AntpoolApi api;
+  private IGetWorkersApi api;
   private Matcher<String> matcher;
   @Autowired
   private RestTemplate restTemplate;

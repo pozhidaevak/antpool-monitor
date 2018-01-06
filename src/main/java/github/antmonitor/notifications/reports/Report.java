@@ -1,6 +1,6 @@
 package github.antmonitor.notifications.reports;
 
-import github.antmonitor.api.AntpoolApi;
+import github.antmonitor.api.IGetWorkersApi;
 import github.antmonitor.notifications.IMonospaceNotifier;
 import github.antmonitor.notifications.INotifier;
 import github.antmonitor.worker.Worker;
@@ -22,11 +22,11 @@ public class Report {
   private INotifier notifier;
 
   private IReportGenerator reportGenerator;
-  private AntpoolApi api;
+  private IGetWorkersApi api;
 
   @Autowired
   public Report(@NotNull INotifier notifier, @NotNull IReportGenerator reportGenerator,
-      @NotNull AntpoolApi api) {
+      @NotNull IGetWorkersApi api) {
 
     this.notifier = notifier;
     this.reportGenerator = reportGenerator;

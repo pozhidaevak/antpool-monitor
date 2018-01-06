@@ -8,6 +8,7 @@ import static org.springframework.test.web.client.response.MockRestResponseCreat
 import com.netflix.hystrix.Hystrix;
 import github.antmonitor.api.AntpoolApi;
 import github.antmonitor.api.ApiTest;
+import github.antmonitor.api.IGetWorkersApi;
 import github.antmonitor.notifications.IMonospaceNotifier;
 import github.antmonitor.notifications.Messages;
 import github.antmonitor.notifications.reports.Report;
@@ -39,7 +40,7 @@ public class MonitorTest extends AbstractTest{
   @Autowired
   private Monitor monitor;
   @Autowired
-  private AntpoolApi api;
+  private IGetWorkersApi api;
 
   @Autowired
   private WorkerChecker workerChecker;
