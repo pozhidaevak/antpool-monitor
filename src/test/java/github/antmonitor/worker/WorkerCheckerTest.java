@@ -1,5 +1,8 @@
 package github.antmonitor.worker;
 
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+
 import github.antmonitor.AbstractTest;
 import github.antmonitor.notifications.IMonospaceNotifier;
 import github.antmonitor.notifications.Messages;
@@ -9,7 +12,6 @@ import java.util.List;
 import java.util.Map;
 import org.junit.Test;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import static org.mockito.Mockito.*;
 
 public class WorkerCheckerTest extends AbstractTest {
 
@@ -37,7 +39,7 @@ public class WorkerCheckerTest extends AbstractTest {
     //First call error messages should apper
     WorkerChecker checker = new WorkerChecker(notifier, rules);
     checker.checkAll(workerMap);
-    verify(notifier).send(Messages.workerLowHashRate(slowWorker.getName(),slowWorker.getLast1h(),
+    verify(notifier).send(Messages.workerLowHashRate(slowWorker.getName(), slowWorker.getLast1h(),
         rules.get(1).getThreshold()));
     verify(notifier).send(Messages.workerNotFound(notExistingWorker.getName()));
 

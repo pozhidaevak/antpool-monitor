@@ -15,6 +15,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+/**
+ * This is main class of the app it is responsible for initial messages, monitoring loop and final
+ * messages.
+ */
 @Service
 public class Monitor {
 
@@ -31,7 +35,8 @@ public class Monitor {
   private boolean apiNotResponding = false;
 
   @Autowired
-  public Monitor(IGetWorkersApi IGetWorkersApi, WorkerChecker workerChecker, Report report, INotifier notifier) {
+  public Monitor(IGetWorkersApi IGetWorkersApi, WorkerChecker workerChecker, Report report,
+      INotifier notifier) {
 
     this.IGetWorkersApi = IGetWorkersApi;
     this.workerChecker = workerChecker;
@@ -45,16 +50,21 @@ public class Monitor {
     report.sendReport();
   }
 
+  // The main loop of the app that pefrorm checks and send messages
   @Scheduled(fixedRateString = "#{${monitorRate} * 1000}")
-  public void loop()  {
+  public void loop() {
     try {
       Map<String, Worker> workerMap = IGetWorkersApi.requestWorkers();
+
+      // If errors occurred previously but now pool working okey
       if (workerMap != null && !workerMap.isEmpty() && apiNotResponding) {
         apiNotResponding = false;
         log.info(Messages.antpoolWorkingAgain());
         notifier.send(Messages.antpoolWorkingAgain());
       }
       workerChecker.checkAll(workerMap);
+
+      // Catch error from Hystrix and notify in case if it is the first error
     } catch (HystrixRuntimeException e) {
       if (!apiNotResponding) {
         apiNotResponding = true;
@@ -63,17 +73,17 @@ public class Monitor {
       } else {
         log.warn("Consequent Hystrix error");
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       log.error("error during loop: ", e);
-      if(!apiNotResponding) {
+      if (!apiNotResponding) {
         notifier.send(Messages.exceptionsInLoop(e.getMessage()));
       }
     }
   }
 
+  // Sends notification when application is closed
   @PreDestroy
-  public  void preDestroy() {
+  public void preDestroy() {
     notifier.send(Messages.bye());
   }
 }

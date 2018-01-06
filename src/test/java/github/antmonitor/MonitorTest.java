@@ -32,7 +32,7 @@ import org.springframework.web.client.RestTemplate;
 
 
 @DirtiesContext
-public class MonitorTest extends AbstractTest{
+public class MonitorTest extends AbstractTest {
 
   private static final Logger log = LogManager.getLogger();
 
@@ -68,14 +68,14 @@ public class MonitorTest extends AbstractTest{
     Hystrix.reset();
     mockServer = MockRestServiceServer.createServer(restTemplate);
     mockServer.expect(ExpectedCount.manyTimes(), requestTo(matcher))
-       .andRespond(withStatus(HttpStatus.NOT_FOUND));
+        .andRespond(withStatus(HttpStatus.NOT_FOUND));
     MockUtil mockUtil = new MockUtil();
     MockingDetails details = new DefaultMockingDetails(notifier, mockUtil);
-    for(int i = 0; i < 9; ++i) {
+    for (int i = 0; i < 9; ++i) {
       Thread.sleep(300);
       monitor.loop();
     }
-    if(notifier != null) {
+    if (notifier != null) {
       verify(notifier, atLeastOnce()).send(contains("404"));
       verify(notifier, atMost(4)).send(contains("404"));
       verify(notifier, times(1)).send(Messages.antpoolCircuitOpened());
@@ -92,7 +92,7 @@ public class MonitorTest extends AbstractTest{
     mockServer.expect(ExpectedCount.manyTimes(), requestTo(matcher))
         .andRespond(withSuccess(ApiTest.expectedResponse, MediaType.APPLICATION_JSON));
 
-    for(int i = 0; i < 10; ++i) {
+    for (int i = 0; i < 10; ++i) {
       Thread.sleep(300);
       monitor.loop();
     }
@@ -118,7 +118,7 @@ public class MonitorTest extends AbstractTest{
     mockServer.expect(ExpectedCount.times(1), requestTo(matcher))
         .andRespond(withSuccess(ApiTest.expectedResponse, MediaType.APPLICATION_JSON));
 
-    for(int i = 0; i < 10; ++i) {
+    for (int i = 0; i < 10; ++i) {
       Thread.sleep(400);
       monitor.loop();
     }
@@ -137,7 +137,7 @@ public class MonitorTest extends AbstractTest{
     mockServer = MockRestServiceServer.createServer(restTemplate);
     mockServer.expect(ExpectedCount.times(10), requestTo(matcher))
         .andRespond(withSuccess("", MediaType.APPLICATION_JSON));
-    for(int i = 0; i < 10; ++i) {
+    for (int i = 0; i < 10; ++i) {
       Thread.sleep(300);
       monitor.loop();
     }
@@ -147,10 +147,11 @@ public class MonitorTest extends AbstractTest{
       verify(notifier, never()).send(Messages.antpoolWorkingAgain());
     }
   }
+
   @Test
   @DirtiesContext
-  public void initTest(){
-    doAnswer((invocation)-> invocation.getArguments()[0]).when(notifier).monospace(anyString());
+  public void initTest() {
+    doAnswer((invocation) -> invocation.getArguments()[0]).when(notifier).monospace(anyString());
     monitor.init();
     verify(notifier).send(Messages.greeting());
     verify(notifier).send(matches("(?s).*Worker Name.*"));

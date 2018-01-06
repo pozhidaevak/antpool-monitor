@@ -79,6 +79,7 @@ public class AntpoolApi implements IGetWorkersApi {
     }
 
     //Get workers array (data.rows) from json
+    //TODO what if pagination is working?
     try {
       workersNode = rootNode.get("data").get("rows");
     } catch (NullPointerException e) {

@@ -10,8 +10,10 @@ public class Worker {
 
   final private String name;
 
+  // Hashrate in kH/s
   final private double last10m;
 
+  // Hashrate in kH/s
   final private double last1h;
 
   @JsonCreator

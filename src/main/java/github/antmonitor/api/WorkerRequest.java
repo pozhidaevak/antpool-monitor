@@ -25,6 +25,14 @@ class WorkerRequest {
     signature = apiSignature(userId, nonce, secret);
   }
 
+  /**
+   * This method creates signature as described here https://www.antpool.com/user/apiGuild.htm
+   *
+   * @param userId Antpool subAccount miner names are stating from it
+   * @param nonce Increasing string
+   * @param secret API secret
+   * @return Signature of message
+   */
   @NotNull
   private String apiSignature(String userId, String nonce, String secret) {
     String data = userId + key + nonce;

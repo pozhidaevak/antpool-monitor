@@ -33,7 +33,8 @@ public class ApiTest extends AbstractTest {
 
   public static final String testWorkerName = "user.worker1";
   //region
-  public static  @Language("JSON") final String expectedResponse = "{\n" +
+  public static @Language("JSON")
+  final String expectedResponse = "{\n" +
       "  \"code\": 0,\n" +
       "  \"message\": \"ok\",\n" +
       "  \"data\": {\n" +

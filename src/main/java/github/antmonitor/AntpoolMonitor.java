@@ -18,6 +18,10 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.web.client.RestTemplate;
 
 //TODO use @Service instead @Component on all beans
+
+/**
+ * Main configuration class. It defines some standard beans and also launches Monitor.init()
+ */
 @SpringBootApplication
 @EnableConfigurationProperties
 @EnableCircuitBreaker

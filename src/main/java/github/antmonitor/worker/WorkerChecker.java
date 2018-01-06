@@ -18,14 +18,23 @@ public class WorkerChecker {
 
   @Autowired
   public WorkerChecker(INotifier notifier, RulesConfig rulesConfig) {
-    this(notifier,rulesConfig.getRules());
+    this(notifier, rulesConfig.getRules());
   }
 
-  public WorkerChecker(INotifier notifier, List<? extends  IWorkerRule> rules) {
+  /**
+   * @param notifier notifier to which messages will be sent
+   * @param rules List of rules that will be checked
+   */
+  public WorkerChecker(INotifier notifier, List<? extends IWorkerRule> rules) {
     this.rules = rules;
     this.notifier = notifier;
   }
 
+  /**
+   * Checks all rules against a map that represent current state of workers
+   *
+   * @param workers Map of workers what will be checked against rules.
+   */
   public void checkAll(Map<String, Worker> workers) {
     for (IWorkerRule rule : rules) {
       String alert = rule.alert(workers);

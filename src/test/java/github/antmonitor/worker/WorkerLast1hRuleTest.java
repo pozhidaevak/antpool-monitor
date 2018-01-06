@@ -8,6 +8,7 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 public class WorkerLast1hRuleTest extends AbstractTest {
+
   public Worker worker = new Worker("test", 115, 125);
   public Worker worker2 = new Worker("test2", 115, 125);
   public WorkerLast1hRule rule = new WorkerLast1hRule("test", 123.45);
@@ -16,7 +17,7 @@ public class WorkerLast1hRuleTest extends AbstractTest {
 
   @Test
   public void workingMiner() {
-    workerMap.put(worker.getName(),worker);
+    workerMap.put(worker.getName(), worker);
     String result = rule.alert(workerMap);
     assertNull("rule.alert() should return null then miner is working", result);
     assertFalse(rule.getErrorState());
@@ -57,7 +58,7 @@ public class WorkerLast1hRuleTest extends AbstractTest {
     workerMap.put(slowWorker.getName(), slowWorker);
     String result = rule.alert(workerMap);
     assertEquals(Messages.workerLowHashRate(
-        slowWorker.getName(),slowWorker.getLast1h(),rule.getThreshold()), result);
+        slowWorker.getName(), slowWorker.getLast1h(), rule.getThreshold()), result);
     assertTrue(rule.getErrorState());
 
     //Second request with slow worker

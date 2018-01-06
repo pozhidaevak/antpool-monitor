@@ -6,6 +6,9 @@ import java.util.List;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
+/**
+ * This class reads array of rules from YAML configuartion
+ */
 @Configuration
 @ConfigurationProperties
 public class RulesConfig {

@@ -7,6 +7,10 @@ import java.util.List;
 import org.springframework.stereotype.Component;
 
 // Todo make pakage local
+
+/**
+ * Creates ASCII table representation of workers
+ */
 @Component
 public class TextTableGenerator implements IReportGenerator {
 

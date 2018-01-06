@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.util.Map;
 
 public interface IGetWorkersApi {
-   Map<String, Worker> requestWorkers() throws IOException;
-   String getUrl();
+
+  Map<String, Worker> requestWorkers() throws IOException;
+
+  String getUrl();
 }
