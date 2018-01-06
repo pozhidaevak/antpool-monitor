@@ -9,3 +9,12 @@ spring:
     name: "AntpoolMonitor"
   profiles:
     include: 'secrets'
+hystrix:
+  collapser.default.maxRequestsInBatch: 1
+  collapser.default.requestCache.enabled: false
+  command:
+    requestWorkers:
+      circuitBreaker.requestVolumeThreshold: 2 # do not change
+      circuitBreaker.sleepWindowInMilliseconds: 1800000 # do not change
+      execution.isolation.thread.timeoutInMilliseconds: 10000
+      metrics.rollingStats.timeInMilliseconds: 3600000 # Why it should be so small?? for infrequent404 to work
