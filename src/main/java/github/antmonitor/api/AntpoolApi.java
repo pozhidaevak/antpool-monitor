@@ -41,18 +41,7 @@ public class AntpoolApi {
     this.url = url;
   }
 
-  //Method is used by Hystrix
-  public Map<String, Worker> openCircuit() {
-    throw new HystrixBadRequestException("Fallback");
-  }
-
-  //TODO test Hystrix
-  @HystrixCommand(/*commandProperties = {
-      @HystrixProperty(name = "circuitBreaker.requestVolumeThreshold", value = "${hystrix.requestVolumeThreshold}"),
-      @HystrixProperty(name = "circuitBreaker.sleepWindowInMilliseconds", value = "#{${hystrix.sleepWindow} * 1000}"),
-      @HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "#{${hystrix.timeout} * 1000}"),
-      @HystrixProperty(name = "metrics.rollingStats.timeInMilliseconds", value = "#{${hystrix.rollingStats} * 1000}")
-  }*/)
+  @HystrixCommand
   public Map<String, Worker> requestWorkers() throws IOException {
     log.info("Starting requestWorkers");
     //Receive necessary request parameters
