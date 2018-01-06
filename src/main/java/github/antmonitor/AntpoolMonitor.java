@@ -23,6 +23,8 @@ import org.springframework.web.client.RestTemplate;
 @EnableCircuitBreaker
 public class AntpoolMonitor {
 
+  private static final Logger log = LogManager.getLogger();
+
   public static void main(String[] args) {
     try {
       log.info("-------START------");
@@ -33,15 +35,6 @@ public class AntpoolMonitor {
     } catch (Exception e) {
       log.fatal("Exception during initialization", e);
     }
-  }
-
-  private static final Logger log = LogManager.getLogger(AntpoolMonitor.class);
-
-  @Configuration
-  @ConditionalOnProperty(value = "scheduling.enabled", havingValue = "true", matchIfMissing = true)
-  @EnableScheduling
-  public static class SchedulingConfiguration {
-
   }
 
   @Bean
@@ -59,5 +52,12 @@ public class AntpoolMonitor {
     ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
     messageSource.setBasename("messages");
     return messageSource;
+  }
+
+  @Configuration
+  @ConditionalOnProperty(value = "scheduling.enabled", havingValue = "true", matchIfMissing = true)
+  @EnableScheduling
+  public static class SchedulingConfiguration {
+
   }
 }

@@ -6,7 +6,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 
 @Service
-public class Messages {
+public final class Messages {
   static private final Locale locale = Locale.getDefault();
 
 

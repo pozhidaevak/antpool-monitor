@@ -8,6 +8,7 @@ import static org.springframework.test.web.client.response.MockRestResponseCreat
 
 import com.fasterxml.jackson.databind.JsonMappingException;
 import github.antmonitor.AbstractTest;
+import github.antmonitor.notifications.IMonospaceNotifier;
 import github.antmonitor.worker.Worker;
 import java.util.Map;
 import org.apache.logging.log4j.LogManager;
@@ -18,6 +19,7 @@ import org.intellij.lang.annotations.Language;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -81,6 +83,9 @@ public class ApiTest extends AbstractTest {
   @Autowired
   private RestTemplate restTemplate;
   private MockRestServiceServer mockServer;
+
+  @MockBean
+  private IMonospaceNotifier notifier;
 
   @Before
   public void setUp() {

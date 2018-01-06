@@ -4,7 +4,6 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
-import com.netflix.hystrix.exception.HystrixBadRequestException;
 import github.antmonitor.notifications.Messages;
 import github.antmonitor.worker.Worker;
 import java.io.IOException;
@@ -23,10 +22,10 @@ public class AntpoolApi implements IGetWorkersApi {
 
   private static final Logger log = LogManager.getLogger(AntpoolApi.class);
 
-  private String url;
-  private String key;
-  private String secret;
-  private String userId;
+  private final String url;
+  private final String key;
+  private final String secret;
+  private final String userId;
   @Autowired
   private RestTemplate restTemplate;
 

@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration;
 @ConfigurationProperties
 public class RulesConfig {
 
-  private List<WorkerLast1hRule> rules;
+  private final List<WorkerLast1hRule> rules;
 
   RulesConfig() {
     this.rules = new ArrayList<>();

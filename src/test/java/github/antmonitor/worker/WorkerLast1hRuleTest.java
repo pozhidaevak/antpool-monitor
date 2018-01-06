@@ -12,7 +12,7 @@ public class WorkerLast1hRuleTest extends AbstractTest {
   public Worker worker2 = new Worker("test2", 115, 125);
   public WorkerLast1hRule rule = new WorkerLast1hRule("test", 123.45);
   public Worker slowWorker = new Worker("test", 1215, 115);
-  Map<String, Worker> workerMap = new HashMap<>();
+  public Map<String, Worker> workerMap = new HashMap<>();
 
   @Test
   public void workingMiner() {

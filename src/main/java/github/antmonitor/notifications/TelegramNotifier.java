@@ -61,4 +61,6 @@ public class TelegramNotifier implements IMonospaceNotifier {
     return chatId;
   }
 
+  public int getTimeout() { return timeout; }
+
 }

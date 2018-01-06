@@ -8,7 +8,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import static org.mockito.Mockito.*;
 
@@ -16,8 +15,6 @@ public class WorkerCheckerTest extends AbstractTest {
 
   @MockBean
   private IMonospaceNotifier notifier;
-
-
 
   @Test
   public void test() {

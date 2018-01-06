@@ -39,11 +39,19 @@ dependencies {
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.9.3'
 
     //Spring related
-    //compile("org.springframework.boot:spring-boot-starter")
     compile group: 'org.springframework', name: 'spring-web', version: springVersion
-    //compile group: 'org.springframework', name: 'spring-test', version: springVersion
-    //compile group: 'org.springframework.boot', name: 'spring-boot-test'
     compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-hystrix', version:'1.4.0.RELEASE'
-    //compile group: 'org.springframework.boot', name: 'spring-boot-starter-web' , version: springBootVersion
     testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: springBootVersion
+}
+
+test {
+    maxParallelForks = 4
+    ignoreFailures = true
+}
+
+analyzeClassesDependencies {
+    justWarn = true
+}
+analyzeTestClassesDependencies {
+    justWarn = true
 }

@@ -35,7 +35,7 @@ class WorkerRequest {
       return Hex.encodeHexString(hmacSha256.doFinal(data.getBytes())).toUpperCase(Locale.ENGLISH);
     } catch (Exception e) {
       log.error("HMAC Exception, should never happen");
-      return "HMAC Exception"; //very bad code
+      return "HMAC Exception"; //TODO throw exception. very bad code
     }
   }
 

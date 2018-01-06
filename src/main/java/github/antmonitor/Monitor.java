@@ -49,7 +49,7 @@ public class Monitor {
   public void loop()  {
     try {
       Map<String, Worker> workerMap = IGetWorkersApi.requestWorkers();
-      if (workerMap != null && workerMap.size() >= 1 && apiNotResponding == true) {
+      if (workerMap != null && !workerMap.isEmpty() && apiNotResponding) {
         apiNotResponding = false;
         log.info(Messages.antpoolWorkingAgain());
         notifier.send(Messages.antpoolWorkingAgain());

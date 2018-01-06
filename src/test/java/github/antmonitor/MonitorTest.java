@@ -6,7 +6,6 @@ import static org.springframework.test.web.client.response.MockRestResponseCreat
 import static org.springframework.test.web.client.response.MockRestResponseCreators.withSuccess;
 
 import com.netflix.hystrix.Hystrix;
-import github.antmonitor.api.AntpoolApi;
 import github.antmonitor.api.ApiTest;
 import github.antmonitor.api.IGetWorkersApi;
 import github.antmonitor.notifications.IMonospaceNotifier;

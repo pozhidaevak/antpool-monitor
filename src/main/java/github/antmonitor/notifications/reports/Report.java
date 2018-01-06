@@ -19,10 +19,10 @@ public class Report {
 
   private static final Logger log = LogManager.getLogger(Report.class);
 
-  private INotifier notifier;
+  private final INotifier notifier;
 
-  private IReportGenerator reportGenerator;
-  private IGetWorkersApi api;
+  private final IReportGenerator reportGenerator;
+  private final IGetWorkersApi api;
 
   @Autowired
   public Report(@NotNull INotifier notifier, @NotNull IReportGenerator reportGenerator,
