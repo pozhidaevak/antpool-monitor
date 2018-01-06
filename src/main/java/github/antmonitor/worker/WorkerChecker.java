@@ -18,7 +18,11 @@ public class WorkerChecker {
 
   @Autowired
   public WorkerChecker(INotifier notifier, RulesConfig rulesConfig) {
-    rules = rulesConfig.getRules();
+    this(notifier,rulesConfig.getRules());
+  }
+
+  public WorkerChecker(INotifier notifier, List<? extends  IWorkerRule> rules) {
+    this.rules = rules;
     this.notifier = notifier;
   }
 

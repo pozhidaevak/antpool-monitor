@@ -23,8 +23,6 @@ class WorkerRequest {
 
     nonce = Long.toString(Instant.now().toEpochMilli());
     signature = apiSignature(userId, nonce, secret);
-
-
   }
 
   @NotNull

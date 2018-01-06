@@ -133,6 +133,7 @@ public class MonitorTest extends AbstractTest{
   @Test
   @DirtiesContext
   public void emptyJSON() throws InterruptedException {
+    Hystrix.reset();
     mockServer = MockRestServiceServer.createServer(restTemplate);
     mockServer.expect(ExpectedCount.times(10), requestTo(matcher))
         .andRespond(withSuccess("", MediaType.APPLICATION_JSON));
