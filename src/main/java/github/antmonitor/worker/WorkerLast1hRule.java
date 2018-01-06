@@ -7,10 +7,9 @@ public class WorkerLast1hRule implements IWorkerRule {
 
   private double threshold;
   private String worker;
-  private boolean error_state;
+  private boolean errorState = false;
 
-  public WorkerLast1hRule() {
-    error_state = false;
+  public WorkerLast1hRule() { //It is mandatory for property binding
   }
 
   public WorkerLast1hRule(String worker, double threshold) {
@@ -20,8 +19,11 @@ public class WorkerLast1hRule implements IWorkerRule {
 
   public String alert(Map<String, Worker> workerMap) {
     Worker worker = workerMap.get(this.worker);
+    if(worker != null && !this.worker.equals(worker.getName())) {
+      throw new IllegalArgumentException("Map key should be equal to worker name");
+    }
     String retVal = null;
-    if (!error_state) {
+    if (!errorState) {
       if (worker == null) {
         retVal = Messages.workerNotFound(this.worker);
       } else if (worker.getLast1h() < threshold) {
@@ -32,7 +34,7 @@ public class WorkerLast1hRule implements IWorkerRule {
     }
 
     if (retVal != null) {
-      error_state = !error_state;
+      errorState = !errorState;
     }
     return retVal;
   }
@@ -41,9 +43,13 @@ public class WorkerLast1hRule implements IWorkerRule {
   public String toString() {
     final StringBuilder sb = new StringBuilder("WorkerLast1hRule{");
     sb.append("threshold=").append(threshold);
-    sb.append(", github.antmonitor.worker='").append(worker).append('\'');
+    sb.append(", worker='").append(worker).append('\'');
     sb.append('}');
     return sb.toString();
+  }
+
+  public boolean getErrorState() {
+    return errorState;
   }
 
   public double getThreshold() {
