@@ -68,10 +68,10 @@ public class Monitor {
     } catch (HystrixRuntimeException e) {
       if (!apiNotResponding) {
         apiNotResponding = true;
-        log.error("first Hystrix error");
+        log.error("first Hystrix error", e);
         notifier.send(Messages.antpoolCircuitOpened());
       } else {
-        log.warn("Consequent Hystrix error");
+        log.warn("Consequent Hystrix error", e);
       }
     } catch (Exception e) {
       log.error("error during loop: ", e);
